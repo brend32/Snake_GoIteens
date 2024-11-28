@@ -389,7 +389,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cell: {fileID: -8430820639417359613, guid: 5f9d1aa1e6318ba4c86729b8074a6a16, type: 3}
-  CellSize: 1
   Width: 10
   Height: 10
 --- !u!4 &2088269436
@@ -461,6 +460,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6542878792720017387, guid: d5f3c843139fd214f94f544bc6c04d8f, type: 3}
+      propertyPath: Room
+      value: 
+      objectReference: {fileID: 2088269435}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

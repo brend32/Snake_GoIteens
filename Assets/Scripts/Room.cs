@@ -6,7 +6,6 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public Cell Cell;
-    public int CellSize;
     public int Width = 10;
     public int Height = 10;
 
@@ -17,7 +16,7 @@ public class Room : MonoBehaviour
     
     public Vector2 GetCellPosition(int x, int y)
     {
-        return new Vector2(x * CellSize - (Width - CellSize) / 2f, y * CellSize - (Height - CellSize) / 2f);
+        return new Vector2(x * 1 - (Width - 1) / 2f, y * 1 - (Height - 1) / 2f);
     }
 
     public void CreateCells()
