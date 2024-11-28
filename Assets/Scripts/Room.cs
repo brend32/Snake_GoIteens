@@ -14,10 +14,10 @@ public class Room : MonoBehaviour
     {
         CreateCells();
     }
-
+    
     public Vector2 GetCellPosition(int x, int y)
     {
-        return new Vector2(x * CellSize, y * CellSize);
+        return new Vector2(x * CellSize - (Width - CellSize) / 2f, y * CellSize - (Height - CellSize) / 2f);
     }
 
     public void CreateCells()
@@ -27,11 +27,8 @@ public class Room : MonoBehaviour
         {
             for (int y = 0; y < Height; y++)
             {
-                float spawnX = x * CellSize;
-                float spawnY = y * CellSize;
-
                 Cell cell = Instantiate(Cell, transform);
-                cell.transform.localPosition = new Vector3(spawnX, spawnY);
+                cell.transform.localPosition = GetCellPosition(x, y);
                 cell.SetColor(isOdd);
 
                 isOdd = !isOdd;
