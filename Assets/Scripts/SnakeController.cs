@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 public enum Direction
@@ -14,6 +15,7 @@ public class SnakeController : MonoBehaviour
 	public Room Room;
 	public Vector2Int RoomPosition;
 	public Direction MoveDirection;
+	public float MoveDelay = 1.5f;
 
 	private float _timer;
 
@@ -31,7 +33,9 @@ public class SnakeController : MonoBehaviour
 	{
 		_timer += Time.deltaTime;
 
-		if (_timer > 2.5f)
+		//TODO: Check input
+		
+		if (_timer > MoveDelay)
 		{
 			MoveSnakeForward();
 			_timer = 0;
