@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced20eb5da9f4d61963afb74e346095e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BodyCellPrefab: {fileID: 4172591545392582585, guid: 409c824dfd9078947b72061da21524b2, type: 3}
+  BodyCellPrefab: {fileID: 8284167273962739380, guid: 409c824dfd9078947b72061da21524b2, type: 3}
   Room: {fileID: 0}
   RoomPosition: {x: 3, y: 5}
   MoveDirection: 0

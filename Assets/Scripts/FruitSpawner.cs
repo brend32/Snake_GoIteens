@@ -6,25 +6,25 @@ using Random = UnityEngine.Random;
 
 public class FruitSpawner : MonoBehaviour
 {
-    public GameObject Fruit;
+    public Fruit Fruit;
     public Room Room;
-
-    public void Start()
-    {
-        SpawnFruit();
-    }
 
     public void SpawnFruit()
     {
-        int width = Room.Width;
-        int height = Room.Height;
+        Fruit fruit = Instantiate(Fruit, transform);
+        UpdatePosition(fruit);
+        
+        Room.AddFruit(fruit);
+    }
 
-        int x = Random.Range(0, width);
-        int y = Random.Range(0, height);
+    public void UpdatePosition(Fruit fruit)
+    {
+        List<Vector2Int> freeCells = Room.GetFreeCells();
 
-        Vector2 spawnPosition = Room.GetCellPosition(x, y);
-
-        GameObject fruit = Instantiate(Fruit, transform);
+        Vector2Int position = freeCells[Random.Range(0, freeCells.Count)];
+        Vector2 spawnPosition = Room.GetCellPosition(position.x, position.y);
+        
+        fruit.RoomPosition = position;
         fruit.transform.localPosition = spawnPosition;
     }
 }

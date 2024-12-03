@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -9,11 +10,56 @@ public class Room : MonoBehaviour
     public int Width = 10;
     public int Height = 10;
     public BoxCollider2D RoomBounds;
+    public SnakeController Snake;
+    public FruitSpawner FruitSpawner;
+
+    private List<Fruit> _fruits = new();
 
     public void Start()
     {
         CreateCells();
         FitToBounds();
+        
+        FruitSpawner.SpawnFruit();
+    }
+
+    public bool TryGetFruitAtPosition(Vector2Int roomPosition, out Fruit fruit)
+    {
+        fruit = _fruits.FirstOrDefault(f => f.RoomPosition == roomPosition);
+
+        return fruit != null;
+    }
+
+    public void AddFruit(Fruit fruit)
+    {
+        _fruits.Add(fruit);
+    }
+
+    public void RemoveAndSpawnNewFruit(Fruit fruit)
+    {
+        FruitSpawner.UpdatePosition(fruit);
+    }
+
+    public List<Vector2Int> GetFreeCells()
+    {
+        List<Vector2Int> occupiedCells = _fruits.Select(f => f.RoomPosition).ToList();
+        occupiedCells.AddRange(Snake.GetOccupiedCells());
+
+        List<Vector2Int> freeCells = new List<Vector2Int>();
+        for (int x = 0; x < Width; x++)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                Vector2Int position = new Vector2Int(x, y);
+
+                if (occupiedCells.Contains(position))
+                    continue;
+                
+                freeCells.Add(position);
+            }
+        }
+
+        return freeCells;
     }
 
     public void FitToBounds()

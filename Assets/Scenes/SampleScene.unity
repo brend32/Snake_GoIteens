@@ -435,8 +435,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2bff46add9cfa24d8777692d38fdd58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Fruit: {fileID: 5690889536504371273, guid: 4b8ce31017cacd24d92ab4a5afcc4902, type: 3}
+  Fruit: {fileID: 1091098461662429936, guid: 4b8ce31017cacd24d92ab4a5afcc4902, type: 3}
   Room: {fileID: 2088269435}
+--- !u!114 &1644632433 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6542878792720017387, guid: d5f3c843139fd214f94f544bc6c04d8f, type: 3}
+  m_PrefabInstance: {fileID: 8304870849413628454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced20eb5da9f4d61963afb74e346095e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2088269434
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +481,8 @@ MonoBehaviour:
   Width: 10
   Height: 10
   RoomBounds: {fileID: 1411516516}
+  Snake: {fileID: 1644632433}
+  FruitSpawner: {fileID: 1520054608}
 --- !u!4 &2088269436
 Transform:
   m_ObjectHideFlags: 0

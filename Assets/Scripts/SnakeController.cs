@@ -14,14 +14,14 @@ public enum Direction
 
 public class SnakeController : MonoBehaviour
 {
-	public Transform BodyCellPrefab;
+	public SnakeBodyCell BodyCellPrefab;
 	public Room Room;
 	public Vector2Int RoomPosition;
 	public Direction MoveDirection;
 	public float MoveDelay = 1.5f;
 
 	private float _timer;
-	private List<Transform> _body = new();
+	private List<SnakeBodyCell> _body = new();
 
 	public void Start()
 	{
@@ -29,21 +29,31 @@ public class SnakeController : MonoBehaviour
 		AddInitialBodyCells();
 	}
 
+	public List<Vector2Int> GetOccupiedCells()
+	{
+		List<Vector2Int> occupiedCells = new List<Vector2Int>();
+		occupiedCells.Add(RoomPosition);
+		occupiedCells.AddRange(_body.Select(b => b.RoomPosition));
+
+		return occupiedCells;
+	}
+
 	public void AddInitialBodyCells()
 	{
-		Vector2Int startPosition = RoomPosition;
+		Vector2Int roomPosition = RoomPosition;
 		for (int i = 0; i < 3; i++)
 		{
-			startPosition.x--;
-			Vector2 spawnPoint = Room.GetCellPosition(startPosition.x, startPosition.y);
-			Transform cell = SpawnBodyCell();
+			roomPosition.x--;
+			Vector2 spawnPoint = Room.GetCellPosition(roomPosition.x, roomPosition.y);
+			SnakeBodyCell cell = SpawnBodyCell();
 
-			cell.localPosition = spawnPoint;
+			cell.RoomPosition = roomPosition; 
+			cell.transform.localPosition = spawnPoint;
 			_body.Add(cell);
 		}
 	} 
 
-	private Transform SpawnBodyCell()
+	private SnakeBodyCell SpawnBodyCell()
 	{
 		return Instantiate(BodyCellPrefab, transform.parent);
 	}
@@ -74,8 +84,13 @@ public class SnakeController : MonoBehaviour
 		Vector2Int newPosition = oldPosition + direction;
 		
 		//TODO: Collision check
+
+		if (Room.TryGetFruitAtPosition(newPosition, out Fruit fruit))
+		{
+			Grow();
+			Room.RemoveAndSpawnNewFruit(fruit);
+		}
 		
-		Grow();
 		MoveBody(oldPosition);
 		RoomPosition = newPosition;
 		TeleportTo(RoomPosition);
@@ -84,14 +99,15 @@ public class SnakeController : MonoBehaviour
 
 	private void Grow()
 	{
-		Transform cell = SpawnBodyCell();
+		SnakeBodyCell cell = SpawnBodyCell();
 		_body.Add(cell);
 	}
 
 	private void MoveBody(Vector2Int oldHeadPosition)
 	{
-		Transform lastCell = _body.Last();
-		lastCell.localPosition = Room.GetCellPosition(oldHeadPosition.x, oldHeadPosition.y);
+		SnakeBodyCell lastCell = _body.Last();
+		lastCell.RoomPosition = oldHeadPosition;
+		lastCell.transform.localPosition = Room.GetCellPosition(oldHeadPosition.x, oldHeadPosition.y);
 
 		_body.Remove(lastCell);
 		_body.Insert(0, lastCell);
