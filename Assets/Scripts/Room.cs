@@ -35,6 +35,33 @@ public class Room : MonoBehaviour
         _fruits.Add(fruit);
     }
 
+    public bool CheckCollision(Vector2Int position)
+    {
+        if (IsPositionOutOfBounds(position))
+        {
+            return true;
+        }
+
+        List<Vector2Int> occupiedCellsBySnake = Snake.GetOccupiedCells();
+        if (occupiedCellsBySnake.Contains(position))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsPositionOutOfBounds(Vector2Int position)
+    {
+        if (position.x < 0 || position.y < 0)
+            return true;
+
+        if (position.x >= Width || position.y >= Height)
+            return true;
+
+        return false;
+    }
+
     public void RemoveAndSpawnNewFruit(Fruit fruit)
     {
         FruitSpawner.UpdatePosition(fruit);

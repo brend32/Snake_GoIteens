@@ -102,8 +102,12 @@ public class SnakeController : MonoBehaviour
 
 		Vector2Int oldPosition = RoomPosition;
 		Vector2Int newPosition = oldPosition + direction;
-		
-		//TODO: Collision check
+
+		if (Room.CheckCollision(newPosition))
+		{
+			Debug.Log("Game over");
+			return;
+		}
 
 		if (Room.TryGetFruitAtPosition(newPosition, out Fruit fruit))
 		{
