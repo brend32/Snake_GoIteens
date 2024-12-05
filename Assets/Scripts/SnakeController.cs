@@ -67,12 +67,32 @@ public class SnakeController : MonoBehaviour
 	{
 		_timer += Time.deltaTime;
 
-		//TODO: Check input
-		
+		ReadInput();
+
 		if (_timer > MoveDelay)
 		{
 			MoveSnakeForward();
 			_timer = 0;
+		}
+	}
+
+	private void ReadInput()
+	{
+		if (MoveDirection != Direction.Down && Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			MoveDirection = Direction.Up;
+		}
+		if (MoveDirection != Direction.Right && Input.GetKeyDown(KeyCode.LeftArrow))
+		{
+			MoveDirection = Direction.Left;
+		}
+		if (MoveDirection != Direction.Up && Input.GetKeyDown(KeyCode.DownArrow))
+		{
+			MoveDirection = Direction.Down;
+		}
+		if (MoveDirection != Direction.Left && Input.GetKeyDown(KeyCode.RightArrow))
+		{
+			MoveDirection = Direction.Right;
 		}
 	}
 
