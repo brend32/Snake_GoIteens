@@ -15,6 +15,7 @@ public enum Direction
 public class SnakeController : MonoBehaviour
 {
 	public SnakeBodyCell BodyCellPrefab;
+	public GameObject Mouth;
 	public Room Room;
 	public Vector2Int RoomPosition;
 	public Direction MoveDirection;
@@ -108,9 +109,12 @@ public class SnakeController : MonoBehaviour
 			Debug.Log("Game over");
 			return;
 		}
+		
+		Mouth.SetActive(false);
 
 		if (Room.TryGetFruitAtPosition(newPosition, out Fruit fruit))
 		{
+			Mouth.SetActive(true);	
 			Grow();
 			Room.RemoveAndSpawnNewFruit(fruit);
 		}
