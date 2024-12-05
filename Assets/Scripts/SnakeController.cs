@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Direction
 {
@@ -14,12 +15,15 @@ public enum Direction
 
 public class SnakeController : MonoBehaviour
 {
+	public UnityEvent Death;
+	
 	public SnakeBodyCell BodyCellPrefab;
 	public GameObject Mouth;
 	public Room Room;
 	public Vector2Int RoomPosition;
 	public Direction MoveDirection;
 	public float MoveDelay = 1.5f;
+	public bool Alive = true;
 
 	private float _timer;
 	private List<SnakeBodyCell> _body = new();
@@ -66,6 +70,9 @@ public class SnakeController : MonoBehaviour
 
 	private void Update()
 	{
+		if (Alive == false)
+			return;
+		
 		_timer += Time.deltaTime;
 
 		ReadInput();
@@ -106,7 +113,7 @@ public class SnakeController : MonoBehaviour
 
 		if (Room.CheckCollision(newPosition))
 		{
-			Debug.Log("Game over");
+			Die();
 			return;
 		}
 		
@@ -123,6 +130,12 @@ public class SnakeController : MonoBehaviour
 		RoomPosition = newPosition;
 		TeleportTo(RoomPosition);
 		FaceDirection(direction);
+	}
+
+	public void Die()
+	{
+		Alive = false;
+		Death.Invoke();
 	}
 
 	private void Grow()
